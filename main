@@ -1,0 +1,130 @@
+#! /bin/bash
+
+# Created By Adarsh Addee
+# Modified by @voodyminingg
+# Aim: Enhanced Termux Experience with Multiple Features
+# Telegram: https://t.me/voodyminingg
+
+clear
+echo -e "\e[1;36m"
+echo "╔══════════════════════════════════════════╗"
+echo "║     TERMUX ENHANCEMENT TOOL v2.0         ║"
+echo "║     Created by: @voodyminingg            ║"
+echo "╚══════════════════════════════════════════╝"
+echo -e "\e[0m"
+
+# Backup existing config
+echo -e "\e[1;33m[*] Backing up existing configuration...\e[0m"
+if [ -f /data/data/com.termux/files/usr/etc/bash.bashrc ]; then
+    mv /data/data/com.termux/files/usr/etc/bash.bashrc /data/data/com.termux/files/usr/etc/bash.bashrc_old_$(date +%Y%m%d_%H%M%S)
+fi
+
+# Copy new config
+cp bash.bashrc /data/data/com.termux/files/usr/etc/bash.bashrc
+
+# Update packages
+echo -e "\e[1;33m[*] Updating packages...\e[0m"
+apt-get update && apt-get upgrade -y
+
+# Install essential packages
+echo -e "\e[1;33m[*] Installing essential packages...\e[0m"
+pkg install -y fish ncurses-utils proot proot-distro tsu fakeroot parted \
+    neofetch git wget curl nano vim python python2 nodejs openssh \
+    termux-api termux-tools
+
+# Install additional useful tools
+echo -e "\e[1;33m[*] Installing additional tools...\e[0m"
+pkg install -y cmake clang make openssl-tool zip unzip tar
+
+# Setup custom aliases
+echo -e "\e[1;33m[*] Setting up custom aliases...\e[0m"
+cat >> /data/data/com.termux/files/usr/etc/bash.bashrc << 'EOF'
+
+# Custom aliases by @voodyminingg
+alias root='proot -0'
+alias fake='proot -0'
+alias su='proot -0'
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias la='ls -a'
+alias update='pkg update && pkg upgrade -y'
+alias clean='pkg clean'
+alias cls='clear'
+alias sysinfo='neofetch'
+alias ip='curl ifconfig.me'
+alias ports='netstat -tulanp'
+alias mem='free -h'
+alias disk='df -h'
+alias py='python'
+alias py3='python3'
+alias pip-upgrade='pip install --upgrade pip'
+EOF
+
+# Create motd (message of the day)
+echo -e "\e[1;33m[*] Creating welcome message...\e[0m"
+cat > /data/data/com.termux/files/usr/etc/motd << 'EOF'
+╔══════════════════════════════════════════╗
+║     WELCOME TO TERMUX                    ║
+║     Enhanced by @voodyminingg            ║
+║     Telegram: https://t.me/voodyminingg  ║
+╚══════════════════════════════════════════╝
+
+Available Commands:
+├─ root  - Fake root access (proot)
+├─ su    - Alternative fake root
+├─ fake  - Another fake root alias
+├─ update- Update packages
+├─ sysinfo- System information
+└─ Type 'help' for more commands
+
+EOF
+
+clear
+
+echo -e "\e[1;31m"
+echo " ██▀███      ▒█████      ▒█████     ▄▄▄█████▓"
+echo "▓██ ▒ ██▒   ▒██▒  ██▒   ▒██▒  ██▒   ▓  ██▒ ▓▒"
+echo "▓██ ░▄█ ▒   ▒██░  ██▒   ▒██░  ██▒   ▒ ▓██░ ▒░"
+echo "▒██▀▀█▄     ▒██   ██░   ▒██   ██░   ░ ▓██▓ ░ "
+echo "░██▓ ▒██▒   ░ ████▓▒░   ░ ████▓▒░     ▒██▒ ░ "
+echo "░ ▒▓ ░▒▓░   ░ ▒░▒░▒░    ░ ▒░▒░▒░      ▒ ░░   "
+echo "  ░▒ ░ ▒░     ░ ▒ ▒░      ░ ▒ ▒░        ░    "
+echo "  ░░   ░    ░ ░ ░ ▒     ░ ░ ░ ▒       ░      "
+echo "   ░            ░ ░         ░ ░              "
+echo -e "\e[1;33m                                 ROOT TERMUX"
+echo -e "\e[1;36m                                 @voodyminingg"
+echo -e "\e[1;32m                                 Telegram: https://t.me/voodyminingg"
+
+echo -e "\e[1;36m\n"
+echo "[*] Installation started"
+sleep 1
+echo "[*] Syncing repositories"
+sleep 0.5
+echo "[*] Installing packages"
+sleep 0.5
+echo "[*] Configuring settings"
+sleep 0.5
+echo "[*] Creating aliases"
+echo "[*] DONE"
+
+sleep 1.5
+echo -e "\n\n\e[0mInstallation complete! Press ENTER to continue..."
+read
+
+clear
+termux-reload-settings
+echo -e "\e[1;32m"
+echo "═══════════════════════════════════════════"
+echo "         INSTALLATION COMPLETE!"
+echo "═══════════════════════════════════════════"
+echo -e "\e[0m"
+echo -e "Commands available:"
+echo -e "  \e[1;33mroot\e[0m      - Fake root access"
+echo -e "  \e[1;33msu\e[0m       - Alternative fake root"
+echo -e "  \e[1;33mfake\e[0m     - Another fake root"
+echo -e "  \e[1;33mupdate\e[0m   - Update packages"
+echo -e "  \e[1;33msysinfo\e[0m  - Show system info"
+echo -e "  \e[1;33mip\e[0m       - Show public IP"
+echo -e "\n"
+echo -e "Join Telegram: \e[1;34mhttps://t.me/voodyminingg\e[0m"
+echo -e "\n"
